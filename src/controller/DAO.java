@@ -51,9 +51,7 @@ public class DAO {
 				array.add(result.getString("ProductID") + "@" + 
 						result.getString("ProductName") + "@" + 
 						result.getString("ProductDescription") + "@" + 
-						result.getString("Price") + "@" + 
-						result.getString("CategoryID") + "@" +
-						result.getString("BrandID"));
+						result.getString("Price"));
 			}
 			return array;
 		} catch (Exception e) {
@@ -82,26 +80,75 @@ public class DAO {
 	
 	public static List<String> getEmployees() throws Exception {
 		try {
-			PreparedStatement statement = conn.prepareStatement("SELECT * FROM EMPLOYEE;");
+			PreparedStatement statement = conn.prepareStatement("SELECT * FROM EMPLOYEE AS E " +
+				"JOIN STORE_LOCATION AS SL ON E.LocationID = SL.LocationID JOIN DEPARTMENT AS D " +
+				"ON E.DepartmentID = D.DepartmentID JOIN JOB AS J ON E.JobID = J.JobID;");
 			ResultSet result = statement.executeQuery();
 			List<String> array = new ArrayList<>();
 			while (result.next()) {
 				array.add(result.getString("EmployeeID") + "@" + 
 						result.getString("EmployeeLastName") + "@" + 
 						result.getString("EmployeeFirstName") + "@" + 
-						result.getString("EmployeeDOB") + "@" + 
-						result.getString("EmployeeGender") + "@" + 
-						result.getString("EmployeePhoneNumber") + "@" + 
-						result.getString("EmployeeAddress") + "@" + 
-						result.getString("hireDate") + "@" + 
-						result.getString("LocationID") + "@" + 
-						result.getString("DepartmentID") + "@" + 
-						result.getString("JobID"));
+						result.getString("LocationName") + "@" + 
+						result.getString("DepartmentName") + "@" + 
+						result.getString("JobTitle"));
 			}
 			return array;
 		} catch (Exception e) {
 			System.out.println(e);
 		}
 		return null;
+	}
+	
+	public static List<String> getCustomers() throws Exception {
+		try {
+			PreparedStatement statement = conn.prepareStatement("SELECT C.CustomerID, " +
+				"CustomerLastName, CustomerFirstName, COUNT(OrderID) AS NumOfOrders " +
+				"FROM CUSTOMER AS C LEFT JOIN `ORDER` AS O ON C.CustomerID = O.CustomerID " + 
+				"GROUP BY CustomerID;");
+			ResultSet result = statement.executeQuery();
+			List<String> array = new ArrayList<>();
+			while (result.next()) {
+				array.add(result.getString("CustomerID") + "@" + 
+						result.getString("CustomerLastName") + "@" + 
+						result.getString("CustomerFirstName") + "@" + 
+						result.getString("NumOfOrders"));
+			}
+			return array;
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
+	}
+	
+	public static List<String> searchStoreLocations(String locationName) throws Exception {
+		try {
+			PreparedStatement statement = conn.prepareStatement("SELECT * FROM STORE_LOCATION " +
+					"WHERE LocationName LIKE '" + locationName + "%';");
+			ResultSet result = statement.executeQuery();
+			List<String> array = new ArrayList<>();
+			while (result.next()) {
+				array.add(result.getString("LocationID") + "@" + 
+						result.getString("LocationName") + "@" + 
+						result.getString("StoreAddress") + "@" + 
+						result.getString("StorePhoneNumber"));
+			}
+			return array;
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
+	}
+	
+	public void insertStoreLocation(String locationID, String locationName,
+			String storeAddress, String storePhoneNumber) throws Exception {
+		try {
+			PreparedStatement statement = conn.prepareStatement("INSERT INTO STORE_LOCATION " +
+					"VALUES (" + locationID + ", '" + locationName + "', '" + storeAddress +
+					"', '" + storePhoneNumber + "');");
+			statement.executeUpdate();
+		} catch (Exception e) {
+			System.out.println(e);
+		}
 	}
 }
