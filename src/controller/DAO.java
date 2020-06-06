@@ -19,10 +19,10 @@ public class DAO {
 		try {
 			String driver = "com.mysql.cj.jdbc.Driver";
 			String url = "jdbc:mysql://localhost:3306/lim_andrew_db?serverTimezone=UTC";
-			String username = "root";
+			String user = "root";
 			String password = "root";
 			Class.forName(driver);
-			conn = DriverManager.getConnection(url, username, password);
+			conn = DriverManager.getConnection(url, user, password);
 			System.out.println("Connected");
 		} catch (Exception e) {
 			System.out.println(e);
