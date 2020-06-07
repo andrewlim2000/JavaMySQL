@@ -18,4 +18,4 @@ public DAO() {
 }
 ```
 4. Run the application GUI class (src/view/app.java).
-![Application GUI](images/JavaSQL.png?raw=true)
+![Application GUI](images/ApplicationGUI.png?raw=true)
