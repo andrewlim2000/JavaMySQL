@@ -20,27 +20,33 @@ import javax.swing.table.DefaultTableModel;
 import controller.DAO;
 
 /**
- * Application
+ * Application GUI to interact with the retail store database.
  * @author Andrew Lim
  *
  */
 public class App extends JFrame {
     
     /**
-     * 
+     * Generated serial version ID.
      */
     private static final long serialVersionUID = 1063852224650278010L;
     
     /**
-     * Data access object
+     * Data access object.
      */
     private static DAO dao;
 
+    /**
+     * Creates the application.
+     */
     public App() {
         super("App");
         dao = new DAO();
     }
     
+    /**
+     * Creates the structure of the application frame.
+     */
     public void start() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JTabbedPane tabbedPane = new JTabbedPane();
@@ -54,6 +60,10 @@ public class App extends JFrame {
         setVisible(true);        
     }
     
+    /**
+     * Creates the store locations tab.
+     * @return panel containing the UI to interact with the store locations table
+     */
     public static JPanel storeLocationsTab() {
         final JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
@@ -153,6 +163,10 @@ public class App extends JFrame {
         return panel;
     }
     
+    /**
+     * Creates the products tab.
+     * @return  panel containing the UI to interact with the products table
+     */
     public static JPanel productsTab() {
         final JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
@@ -268,6 +282,10 @@ public class App extends JFrame {
         return panel;
     }
 
+    /**
+     * Creates the inventory tab.
+     * @return panel containing the UI to interact with the inventory table
+     */
     public static JPanel inventoryTab() {
         final JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
@@ -372,6 +390,10 @@ public class App extends JFrame {
         return panel;
     }
     
+    /**
+     * Creates the employees tab.
+     * @return panel containing the UI to interact with the employees table
+     */
     public static JPanel employeesTab() {
         final JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
@@ -528,6 +550,10 @@ public class App extends JFrame {
         return panel;
     }
     
+    /**
+     * Creates the customers tab.
+     * @return panel containing the UI to interact with the customers table
+     */
     public static JPanel customersTab() {
         final JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
@@ -655,6 +681,10 @@ public class App extends JFrame {
         return panel;
     }
     
+    /**
+     * Main method to run the application.
+     * @param theArgs
+     */
     public static void main(final String[] theArgs) {
         EventQueue.invokeLater(new Runnable() {
             @Override
